@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale= placeholder=""1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    {{!-- CSS BootStrap --}}
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    {{!-- CSS Personalizado --}}
+    <link rel="stylesheet" href="css/index.css">
+</head>
+
+<body>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div class="divTitle text-center">
+                    <h1>SEDENA</h1>
+                </div>
+                <div class="divLogin text-center">
+                    <h3>Iniciar Session</h3><br>
+                    <form action="/auth" method="POST">
+                        <input type="text" class="inputLogin" name="txtNombre" placeholder="Nombnre de Usuario"
+                            required><br><br>
+                        <input type="password" class="inputLogin" name="txtPass" placeholder="Contrasenia"
+                            required><br><br>
+                        <button class="btn btn-primary inputLogin">Click me</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+        </div>
+    </div>
+
+    {{!-- JS jQuery --}}
+    <script src="js/jquery-3.3.1.slim.min.js">
+    </script>
+
+    {{!-- JS Propper --}}
+    <script src="js/popper.min.js">
+    </script>
+
+    {{!-- JS Bootstrap --}}
+    <script src="js/bootstrap.min.js">
+    </script>
+</body>
+
+
+</html>

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>SEDENA</title>
+    {{!-- CSS BootStrap --}}
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+
+    {{!-- CSS Personalizado --}}
+    <link rel="stylesheet" href="css/index.css">
+
+    {{!-- CSS Datatables --}}
+    <link rel="stylesheet" href="datatables/datatables.css">
+
+    {{!-- CSS DataTables Bootstrap --}}
+    <link rel="stylesheet" href="datatables/DataTables/css/dataTables.bootstrap4.min.css">
+
+</head>
+
+<body>
+    <div class="NavC">
+        <nav class="navbar navbar-expand-lg navbar-dark ">
+            <a class="navbar-brand" href="/">SEDENA</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav">
+                    <div class="dropdown">
+                        <a class="nav-item nav-link" href="/">CONSTANCIAS</a>
+                    </div>
+                    <div class="dropdown">
+                        <a class="nav-item nav-link" href="/reporte">REPORTES</a>
+                    </div>
+                    <div class="dropdown">
+                        <a class="nav-item nav-link" href="/#">FUERZA AEREA</a>
+                    </div>
+                    <div class="dropdown">
+                        <a class="nav-item nav-link" href="/#">FUERZA NAVAL</a>
+                    </div>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+    <br><br>
+    <div class="container">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <img src="img/emc.png" alt="" height="100" width="100">
+            </div>
+            <div class="col-md-4">
+                <h1 class="titulo1">COMPUTO</h1>
+            </div>
+            <div class="col-md-4">
+                <img src="img/ffaa.png" alt="" height="100" width="100">
+            </div>
+        </div>
+    </div>
+    {{{body}}}
+
+
+
+
+    {{!-- JS jQuery --}}
+    <script src="js/jquery-3.3.1.slim.min.js">
+    </script>
+
+    {{!-- JS Propper --}}
+    <script src="js/popper.min.js">
+    </script>
+
+    {{!-- JS Bootstrap --}}
+    <script src="js/bootstrap.min.js">
+    </script>
+
+    {{!-- JS DATATABLE --}}
+    <script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js">
+    </script>
+
+
+</body>
+
+</html>

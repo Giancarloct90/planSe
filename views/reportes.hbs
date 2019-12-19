@@ -1,0 +1,99 @@
+<div class="container">
+    <div class="row">
+        <div class="contenido">
+            <h1>Reportes</h1><br><br>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>FUERZAS</th>
+                        <th>OFICIALES</th>
+                        <th>SUBOFICIALES</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Ejercito</td>
+                        {{#each reportes}}
+                        <td>{{this.totalOE}}</td>
+                        <td>{{this.totalSUBE}}</td>
+                        {{/each}}
+                    </tr>
+                    <tr>
+                        <td>Aerea</td>
+                        {{#each reportes}}
+                        <td>{{this.totalOA}}</td>
+                        <td>{{this.totalSUBA}}</td>
+                        {{/each}}
+                    </tr>
+                    <tr>
+                        <td>Naval</td>
+                        {{#each reportes}}
+                        <td>{{this.totalON}}</td>
+                        <td>{{this.totalSUBN}}</td>
+                        {{/each}}
+                    </tr>
+                </tbody>
+            </table>
+            <br>
+            <br>
+            {{!-- TOTALES --}}
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Tipo</th>
+                        <th>Cantidad</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        {{#each reportes}}
+                        <td>Total Oficiales</td>
+                        <td>{{this.totalO}}</td>
+                        {{/each}}
+                    </tr>
+                    <tr>
+                        {{#each reportes}}
+                        <td>Total SubOficiales</td>
+                        <td>{{this.totalSUB}}</td>
+                        {{/each}}
+                    </tr>
+                    <tr>
+                        {{#each reportes}}
+                        <td>Total Axuliares</td>
+                        <td>{{this.totalAUX}}</td>
+                        {{/each}}
+                    </tr>
+                    <tr>
+                        {{#each reportes}}
+                        <td>Total Contrato</td>
+                        <td>{{this.totalCON}}</td>
+                        {{/each}}
+                    </tr>
+                    <tr>
+                        {{#each reportes}}
+                        <td style="font-weight:bold">Total Empleado</td>
+                        <td style="font-weight:bold">{{this.totalEMP}}</td>
+                        {{/each}}
+                    </tr>
+                </tbody>
+            </table>
+            {{!-- {{#each reportes}}
+            <h5>Total Oficiales: {{this.totalO}}</h5>
+            <h5>Total SubOficiales: {{this.totalSUB}}</h5>
+            {{/each}} --}}
+            {{!-- {{#each reportes}}
+            <h1>{{this.totalOE}}</h1>
+            <h1>{{this.totalOA}}</h1>
+            <h1>{{this.totalON}}</h1>
+            <h1>{{this.totalSUBE}}</h1>
+            <h1>{{this.totalSUBA}}</h1>
+            <h1>{{this.totalSUBN}}</h1>
+            <h1>{{this.totalAUX}}</h1>
+            <h1>{{this.totalO}}</h1>
+            <h1>{{this.totalSUB}}</h1>
+            <h1>{{this.totalCON}}</h1>
+            <h1>{{this.totalEMP}}</h1>
+            {{/each}} --}}
+        </div>
+    </div>
+</div>

@@ -1,0 +1,71 @@
+<head>
+
+</head>
+
+<div class="container">
+    <div class="contenido">
+        <h2 class="text-center">Total Empleados</h2>
+        <br>
+        <br>
+        <h4>Total de Empleados: {{totalEmpleado}}</h4><br>
+
+        <div class="table-responsive-sm">
+            <table id="tableEmcAux" class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>Codigo</th>
+                        <th>Nombre</th>
+                        <th>Constancia</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{#each empleado}}
+                    <tr>
+                        <td>{{this.No_Empleado}}</td>
+                        <td>{{this.Nombre_Empleado}}</td>
+                        <td><a href="/detalles/{{this.No_Empleado}}">Con Deducciones</a></td>
+                    </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{{!-- JS jQuery --}}
+<script src="js/jquery-3.3.1.slim.min.js">
+</script>
+
+{{!-- JS Propper --}}
+<script src="js/popper.min.js">
+</script>
+
+{{!-- JS Bootstrap --}}
+<script src="js/bootstrap.min.js">
+</script>
+
+{{!-- JS DATATABLE --}}
+<script type="text/javascript" charset="utf8" src="js/jquery.dataTables.js">
+</script>
+
+<script>
+    $(document).ready(function () {
+        $('#tableEmcAux').DataTable({
+            //para cambiar el lenguaje a español
+            "language": {
+                "lengthMenu": "Mostrar _MENU_ registros",
+                "zeroRecords": "No se encontraron resultados",
+                "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                "sSearch": "Buscar:",
+                "oPaginate": {
+                    "sFirst": "Primero",
+                    "sLast": "Último",
+                    "sNext": "Siguiente",
+                    "sPrevious": "Anterior"
+                },
+                "sProcessing": "Procesando...",
+            }
+        });
+    });
+</script>
