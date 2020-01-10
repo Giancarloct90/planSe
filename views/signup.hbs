@@ -1,0 +1,35 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="contenido2">
+                <h3>Nuevo Usuario</h3><br>
+                <form action="/signupP" method="POST">
+                    <input type="text" class="inputLogin" name="txtNombre" placeholder="Nombnre de Usuario"
+                        required><br><br>
+                    <input type="password" class="inputLogin" name="txtPass" placeholder="Contrasenia" required><br><br>
+                    <button class="btn btn-primary inputLogin">Guardar</button>
+                </form>
+                <br><br>
+                <table class="table table-dark">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Password</th>
+                            <th>Accion</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{#each user}}
+                        <tr>
+                            <td>{{this.user_Nombre}}</td>
+                            <td>{{this.user_Password}}</td>
+                            <td><a class="fas fa-trash-alt" href="/userD/{{this.user_Codigo}}"></a></td>
+                        </tr>
+                        {{/each}}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -23,14 +23,25 @@ body {
     border-radius: 15px;
     margin: 20px;
     padding: 50px;
+    width: auto;
 }
+
+.contenido2 {
+    background-color: white;
+    border-radius: 15px;
+    margin: 50px;
+    padding: 50px;
+    width: auto;
+    display: block;
+}
+
 
 /***********************************************
 
 
 /* TABLE COLOR */
 /**************************************************/
-table {
+/* table {
     border-collapse: collapse;
     width: 100%;
 }
@@ -48,7 +59,7 @@ tr:nth-child(even) {
 th {
     background-color: #4CAF50;
     color: white;
-}
+} */
 
 /*******************************************/
 

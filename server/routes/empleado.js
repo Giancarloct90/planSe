@@ -9,35 +9,9 @@ const path = require('path');
 const blobStream = require('blob-stream');
 var open = require('open');
 
-// DATABASE MSSQLSERVER CONFIGURATION
-const configMssql = {
-    user: 'sa',
-    password: 'Jesucristo1990',
-    server: '192.168.0.144\\SQLEXPRESS',
-    //server: '192.168.1.35\\SQLEXPRESS',
-    database: 'PLEMH',
-};
-
-// DATABASE CONNECTION
-// sql.connect(configMssql, (err) => {
-//     if (err) {
-//         console.log('Error Database', err)
-//         return;
-//     }
-//     console.log('Database Connect');
-// });
-
-let connectDB = async () => {
-    try {
-        await sql.connect(configMssql);
-        console.log('Database Connect')
-    } catch (error) {
-        console.log('Error connect DB', error);
-    }
-};
-
-connectDB();
-
+const {
+    isAuth
+} = require('../utils/utils');
 
 app.get('/', async (req, res) => {
     res.render('login', {
@@ -45,11 +19,9 @@ app.get('/', async (req, res) => {
     });
 });
 
-app.post('/auth', (req, res) => {
-    res.redirect('/home');
-});
 
-app.get('/home', async (req, res) => {
+
+app.get('/home', isAuth, async (req, res) => {
     try {
         let empleado = await sql.query('getTotalEmpleados');
         res.render('home', {
@@ -61,7 +33,7 @@ app.get('/home', async (req, res) => {
     }
 })
 
-app.get('/detalles/:id', async (req, res) => {
+app.get('/detalles/:id', isAuth, async (req, res) => {
     let fonts = {
         Roboto: {
             normal: 'node_modules/roboto-font/fonts/Roboto/roboto-regular-webfont.ttf',
@@ -77,30 +49,23 @@ app.get('/detalles/:id', async (req, res) => {
         var dia = new Date().getDate();
         var anio = new Date().getFullYear();
         var deduciones;
-        if (dia >= 9 && dia <= 15) {
-            deduciones = await sql.query(`EXECUTE getDeduciones ${id}, ${mes-1}, ${anio}`);
-        }
-        if (dia <= 9) {
-            deduciones = await sql.query(`EXECUTE getDeduciones ${id}, ${mes-1}, ${anio}`);
-        }
-        if (dia >= 15) {
-            deduciones = await sql.query(`EXECUTE getDeduciones ${id}, ${mes}, ${anio}`);
-        }
+        var detalleDeducciones = [],
+            detalleDeduccionesFinal = [],
+            codigo, nombreEmpleado, sueldoNominal, totalDeducciones, totalSueldoNeto, dia, mes, anio, fechaIngreso, antiguedad, puesto, asignado;
 
-        var detalleDeducciones = [];
-        var detalleDeduccionesFinal = [];
-        var codigo;
-        var nombreEmpleado;
-        var sueldoNominal;
-        var totalDeducciones;
-        var totalSueldoNeto;
-        var dia;
-        var mes;
-        var anio;
-        var fechaIngreso;
-        var antiguedad;
-        var puesto;
-        var asignado;
+        // if (dia >= 9 && dia <= 15) {
+        //     deduciones = await sql.query(`EXECUTE getDeduciones ${id}, ${mes-1}, ${anio}`);
+        // }
+        // if (dia <= 9) {
+        //     deduciones = await sql.query(`EXECUTE getDeduciones ${id}, ${mes-1}, ${anio}`);
+        // }
+        // if (dia >= 15) {
+        //     console.log('Mayor 15 29')
+        //     deduciones = await sql.query(`EXECUTE getDeduciones ${id}, ${mes}, ${anio}`);
+        // }
+
+        deduciones = await sql.query(`EXECUTE getDeduciones ${id}, 11, 2019`);
+
         deduciones.recordset.map((element) => {
             detalleDeducciones = [];
             detalleDeducciones.push(element.nombreDeduc);
@@ -109,7 +74,7 @@ app.get('/detalles/:id', async (req, res) => {
             // detalleDeducciones += `['${element.nombreDeduc}','${element.monto}'],`
         });
 
-        //console.log(detalleDeduccionesFinal);
+        console.log(detalleDeduccionesFinal);
         result.recordset.map((element) => {
             codigo = element.codigo
             nombreEmpleado = element.nombreEmpleado
@@ -128,25 +93,31 @@ app.get('/detalles/:id', async (req, res) => {
         console.log('Error Query', error);
     }
     var data = {
-        pageSize: 'A4',
-        content: [{
-
+        content: [
+            // PRIMERA IMAGEN
+            {
                 image: path.join(__dirname, `../../public/img/titulo.JPG`),
                 width: 520,
                 height: 80,
                 margin: [0, 0, 0, 0]
             },
+
+            // TITULO
             {
                 text: '\nCONSTANCIA\n\n',
                 style: 'header',
                 fontSize: 16,
                 alignment: 'center'
             },
+
+            // TEXTO INICIO
             {
                 text: 'EL SUSCRITO JEFE DEL DEPARTAMENTO DE COMPUTO DE LA PAGADURIA GENERAL DE LAS FUERZAS ARMADAS POR ESTE MEDIO HACE CONSTAR QUE:\n\n',
                 fontSize: 11,
                 alignment: 'justify'
             },
+
+            // NOMBRE CARGO DONDE SE DESEMPENIA
             {
                 text: [{
                         text: `${nombreEmpleado} `,
@@ -160,83 +131,126 @@ app.get('/detalles/:id', async (req, res) => {
                 ],
                 alignment: 'justify'
             },
+
+            // SUELDO
             {
                 text: `DEVENGANDO UN SUELDO DE:  ${sueldoNominal} LEMPIRAS\n\n`,
                 fontSize: 11,
             },
+
+            // TITULO DETALLE
             {
                 text: 'DETALLADOS EN LA FORMA SIGUIENTE: \n\n',
                 fontSize: 11,
             },
+
+            // SUELDO NOMINAL
             {
                 text: `SUELDO NOMINAL...................... ${sueldoNominal}\n`,
                 fontSize: 11,
                 margin: [60, 0, 0, 0]
             },
+
+            // SUELDO DEDUCC
             {
                 text: `TOTAL DEDCUCCIONES.............. ${totalDeducciones}\n`,
                 fontSize: 11,
                 margin: [60, 0, 0, 0]
             },
+
+            //SUELDO NETO
             {
                 text: `SUELDO NETO............................. ${totalSueldoNeto}\n\n`,
                 fontSize: 11,
                 margin: [60, 0, 0, 0]
             },
+
+            // SUELDO DETALLE DEDUCC
             {
                 text: 'DETALLE DE DEDUCCIONES:\n',
                 fontSize: 11,
                 margin: [60, 0, 0, 0]
             },
+
+            // TABLA DEDUCCIONES
             // {
-            //     text: `${detalleDeducciones}\n\n`,
-            //     fontSize: 11
+            //     layout: 'noBorders',
+            //     table: {
+            //         body: detalleDeduccionesFinal
+            //     },
+            //     margin: [60, 0, 0, 0],
             // },
-            {
-                layout: 'noBorders',
-                table: {
-                    body: detalleDeduccionesFinal
-                },
-                margin: [60, 0, 0, 0],
-            },
+
+            // CODIGO EMPLEADO
             {
                 text: `\nCODIGO EMPLEADO: ${codigo}\n`,
                 fontSize: 11,
                 margin: [60, 0, 0, 0]
 
             },
+
+            // FECHA INGRESO
             {
                 text: `FECHA DE INGRESO: ${fechaIngreso.toUpperCase()}\n`,
                 fontSize: 11,
                 margin: [60, 0, 0, 0]
 
             },
+
+            // ANIOS DE SERVICIOS
             {
                 text: `AÑOS DE SERVICIO: ${antiguedad} AÑOS \n\n`,
                 fontSize: 11,
                 margin: [60, 0, 0, 0]
 
             },
+
+            // TEXTO FINAL
             {
                 text: `Y PARA LOS FINES QUE EL INTERESADO(A) CONVENGA, SE EXTIENDE LA PRESENTE CONSTANCIA EN LA CIUDAD DE COMAYAGÜELA, M.D.C. A LOS ${dia} DIAS DEL MES DE ${mes.toUpperCase()} DEL AÑO ${anio}\n\n\n\n\n`,
                 fontSize: 11,
                 alignment: 'justify'
             },
+
+            //  DIRECTOR DEL DEPTO
             {
                 text: `CORONEL DE ADMON. FAUSTO ISABEL ZAMBRANO CARRASCO\n`,
                 fontSize: 11,
                 alignment: 'center'
             },
+
+            // FIRMA FINAL
             {
                 text: `JEFE DEL DEPTO. COMPUTO`,
                 fontSize: 11,
                 alignment: 'center'
-            }
+            },
+            {
+                style: 'tableExample',
+                table: {
+                    body: [
+                        [{
+                            text: 'Column 1',
+                            alignment: 'center'
+                        }, {
+                            text: 'Column 2',
+                            alignment: 'right'
+                        }, 'Column 3'],
+                        [{
+                            text: 'One value goes here',
+                            alignment: 'center'
+                        }, {
+                            text: 'Another one here',
+                            alignment: 'right'
+                        }, 'OK?']
+                    ]
+                }
+            },
         ]
     }
 
-    let printer = new pdfmake(fonts);
 
+    let printer = new pdfmake(fonts);
     let pdfdoc = printer.createPdfKitDocument(data);
     let nomDirDPF = path.join(__dirname, `../../public/pdf/${new Date().getTime()}.pdf`);
     pdfdoc.pipe(fs.createWriteStream(nomDirDPF));
@@ -253,7 +267,7 @@ app.get('/detalles/:id', async (req, res) => {
 });
 
 
-app.get('/reporte', async (req, res) => {
+app.get('/reporte', isAuth, async (req, res) => {
     try {
         let reporte = await sql.query('EXECUTE getReporteEmpleado');
         var totalOE, totalOA, totalON, totalSUBE, totalSUBA, totalSUBN, totalAUX, totalO, totalSUB, totalCON, totalEMP
