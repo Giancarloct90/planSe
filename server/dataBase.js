@@ -4,8 +4,9 @@
     const configMssql = {
         user: 'sa',
         password: 'Jesucristo1990',
-        //server: '192.168.1.31\\SQLEXPRESS',
-        server: '192.168.0.107\\SQLEXPRESS',
+        //server: '192.168.1.24\\SQLEXPRESS',
+        // server: '192.168.0.102\\SQLEXPRESS',
+        server: '192.168.100.186\\SQLEXPRESS',
         database: 'PLEMH',
     };
     try {

@@ -42,7 +42,7 @@ app.use(require('./routes/indexRoutes'));
 // APP LISTEN
 (async () => {
     try {
-        await app.listen(7000);
+        await app.listen(3000);
         console.log('Server On');
     } catch (e) {
         console.log('Error');
